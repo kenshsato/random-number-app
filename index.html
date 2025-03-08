@@ -17,11 +17,6 @@
       top: 10px;
       left: 10px;
       width: 50px;
-      transition: transform 0.2s;
-    }
-
-    #input-box:focus {
-      transform: scale(1.05);
     }
 
     #result {
@@ -29,6 +24,7 @@
       transform: translateY(-50%);
       font-size: 7.5rem;
       font-weight: bold;
+      transition: opacity 0.1s;
     }
 
     #button-container {
@@ -70,31 +66,37 @@
   </style>
 </head>
 <body>
-  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()" data-original-value="6">
+  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()">
   <div id="result">0</div>
   <div id="button-container">
     <button onclick="drawNumber()"> </button>
   </div>
 
   <script>
+    let previousValue = document.getElementById('input-box').value;
+
     function drawNumber() {
       const resultDiv = document.getElementById('result');
       const maxNumber = parseInt(document.getElementById('input-box').value);
-    
-      const randomNumber = Math.floor(Math.random() * maxNumber) + 1;
-      resultDiv.textContent = randomNumber;
+
+      // 数字が出る前に一瞬非表示にする
+      resultDiv.style.opacity = '0';
+      setTimeout(() => {
+        const randomNumber = Math.floor(Math.random() * maxNumber) + 1;
+        resultDiv.textContent = randomNumber;
+        resultDiv.style.opacity = '1';
+      }, 100);
     }
-    
+
     function validateInput() {
       const inputBox = document.getElementById('input-box');
       const maxNumber = parseInt(inputBox.value);
-      const originalValue = inputBox.getAttribute('data-original-value');
-    
+
       if (isNaN(maxNumber) || maxNumber < 1) {
         alert('1以上の数値を入力してください。');
-        inputBox.value = originalValue;
+        inputBox.value = previousValue;
       } else {
-        inputBox.setAttribute('data-original-value', inputBox.value);
+        previousValue = inputBox.value;
       }
     }
   </script>
