@@ -37,22 +37,29 @@
       color: white;
       border: none;
       border-radius: 50%;
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 70px;
       font-size: 1.2rem;
       font-weight: bold;
       text-align: center;
-      line-height: 80px;
-      box-shadow: 0 8px 0 #004b99, 
-                  0 10px 15px rgba(0, 0, 0, 0.2);
-      transform: perspective(200px) rotateX(10deg);
+      line-height: 70px;
+      box-shadow: 0 10px 0 #004b99, 
+                  0 12px 20px rgba(0, 0, 0, 0.2);
+      transform: perspective(300px) rotateX(15deg);
       transition: all 0.2s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     
     button:active {
-      transform: perspective(200px) rotateX(10deg) translateY(5px);
+      transform: perspective(300px) rotateX(15deg) translateY(6px);
       box-shadow: 0 3px 0 #004b99, 
-                  0 5px 10px rgba(0, 0, 0, 0.2);
+                  0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    html, body {
+      touch-action: manipulation;
     }
 
   </style>
