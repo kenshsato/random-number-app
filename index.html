@@ -74,7 +74,7 @@
   </style>
 </head>
 <body>
-  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()">
+  <input type="number" id="input-box" value="6" min="1">
   <div id="result">0</div>
   <div id="button-container">
     <button onclick="drawNumber()"> </button>
@@ -97,6 +97,9 @@
         alert('1以上の数値を入力してください。');
         inputBox.value = 1;
       }
+    
+      // 入力ボックスから外れた際にズームを戻す
+      document.documentElement.style.zoom = "100%";
     }
   </script>
 </body>
