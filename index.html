@@ -17,6 +17,15 @@
       top: 10px;
       left: 10px;
       width: 50px;
+      transition: transform 0.2s;
+    }
+
+    #input-box:focus {
+      transform: scale(1.05);
+    }
+
+    #input-box:blur {
+      transform: scale(1);
     }
 
     #result {
@@ -65,7 +74,7 @@
   </style>
 </head>
 <body>
-  <input type="number" id="input-box" value="6" min="1">
+  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()">
   <div id="result">0</div>
   <div id="button-container">
     <button onclick="drawNumber()"> </button>
@@ -73,17 +82,21 @@
 
   <script>
     function drawNumber() {
-      const inputBox = document.getElementById('input-box');
       const resultDiv = document.getElementById('result');
-      const maxNumber = parseInt(inputBox.value);
-
-      if (isNaN(maxNumber) || maxNumber < 1) {
-        alert('1以上の数値を入力してください。');
-        return;
-      }
-
+      const maxNumber = parseInt(document.getElementById('input-box').value);
+    
       const randomNumber = Math.floor(Math.random() * maxNumber) + 1;
       resultDiv.textContent = randomNumber;
+    }
+    
+    function validateInput() {
+      const inputBox = document.getElementById('input-box');
+      const maxNumber = parseInt(inputBox.value);
+    
+      if (isNaN(maxNumber) || maxNumber < 1) {
+        alert('1以上の数値を入力してください。');
+        inputBox.value = 1;
+      }
     }
   </script>
 </body>
