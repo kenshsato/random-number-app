@@ -36,7 +36,7 @@
       bottom: 50px;
       width: 100%;
     }
-    
+
     button {
       background-color: #007bff;
       color: white;
@@ -48,7 +48,7 @@
       font-weight: bold;
       text-align: center;
       line-height: 70px;
-      box-shadow: 0 10px 0 #004b99, 
+      box-shadow: 0 10px 0 #004b99,
                   0 12px 20px rgba(0, 0, 0, 0.2);
       transform: perspective(300px) rotateX(15deg);
       transition: all 0.2s;
@@ -56,59 +56,52 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    
+
     button:active {
       transform: perspective(300px) rotateX(15deg) translateY(6px);
-      box-shadow: 0 3px 0 #004b99, 
+      box-shadow: 0 3px 0 #004b99,
                   0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     html, body {
       touch-action: manipulation;
     }
-
   </style>
 </head>
 <body>
-  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()" onfocus="preventZoom()">
+  <input type="number" id="input-box" value="6" min="1" onblur="validateInput()" onfocus="storeOldValue()">
   <div id="result">0</div>
   <div id="button-container">
     <button onclick="drawNumber()"> </button>
   </div>
 
   <script>
-    // ランダム数値を生成する関数
+    let oldValue = 6;
+
+    function storeOldValue() {
+      const inputBox = document.getElementById('input-box');
+      oldValue = inputBox.value;
+    }
+
     function drawNumber() {
       const resultDiv = document.getElementById('result');
       const maxNumber = parseInt(document.getElementById('input-box').value);
+
       const randomNumber = Math.floor(Math.random() * maxNumber) + 1;
       resultDiv.textContent = randomNumber;
     }
 
-    // 入力値のバリデーションとズーム解除
     function validateInput() {
       const inputBox = document.getElementById('input-box');
       const maxNumber = parseInt(inputBox.value);
 
       if (isNaN(maxNumber) || maxNumber < 1) {
         alert('1以上の数値を入力してください。');
-        inputBox.value = 1;
+        inputBox.value = oldValue;
       }
 
-      // iPhoneのズームを元に戻す
-      resetZoom();
-    }
-
-    // iPhoneでのズームを防止する関数
-    function preventZoom() {
-      const meta = document.querySelector("meta[name=viewport]");
-      meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0");
-    }
-
-    // 入力ボックスから外れた際にズームを戻す関数
-    function resetZoom() {
-      const meta = document.querySelector("meta[name=viewport]");
-      meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=5.0");
+      // 入力ボックスから外れた際にズームを戻す
+      document.documentElement.style.zoom = "100%";
     }
   </script>
 </body>
